@@ -1,13 +1,14 @@
 const express = require('express')
+const bodyParse = require('body-parser')
+const { urlencoded } = require('body-parser')
 const router = express.Router()
 
 var app = express()
 
-/* app.use('/', function (req, res) {
-  res.send('hola')
-}) */
-
+app.use(bodyParse.json())
+app.use(bodyParse.urlencoded({ extended: false }))
 app.use(router)
+
 router.get('/message', function (req, res) {
   res.send('Lista de mensaje')
 })
@@ -17,7 +18,9 @@ router.post('/message', function (req, res) {
 })
 
 router.delete('/message', function (req, res) {
-  res.send('Mensaje eliminado')
+  console.log(req.query)
+  console.log(req.body)
+  res.send('Mensaje ' + req.body.id + " añadido correctamente")
 })
 
 app.listen(3000)
