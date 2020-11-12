@@ -1,6 +1,8 @@
 const express = require('express')
 const bodyParse = require('body-parser')
-const { urlencoded } = require('body-parser')
+
+const response = require('./network/response')
+
 const router = express.Router()
 
 var app = express()
@@ -14,17 +16,24 @@ router.get('/message', function (req, res) {
   res.header({
     "custom-header": "Nuestro valor personalizado"
   })
-  res.send('Lista de mensaje')
+
+  response.success(req, res, 'Lista de mensaje')
 })
 
 router.post('/message', function (req, res) {
-  res.status(201).send({ error: '', body: 'Creado correctamente' })
+  console.log(req.query)
+  if (req.query.error == 'ok') {
+    response.error(req, res, 'Error simulado', 400)
+  } else {
+    response.success(req, res, 'Creado correctamente', 201)
+  }
 })
 
 router.delete('/message', function (req, res) {
   console.log(req.query)
   console.log(req.body)
-  res.send('Mensaje ' + req.body.id + " añadido correctamente")
+  /* res.send('Mensaje ' + req.body.id + " añadido correctamente") */
+  response.success(req, res, 'Eliminado correctamente')
 })
 
 app.listen(3000)
