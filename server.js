@@ -18,7 +18,7 @@ router.get('/message', function (req, res) {
 })
 
 router.post('/message', function (req, res) {
-  res.send('Mensaje añadido')
+  res.status(201).send({ error: '', body: 'Creado correctamente' })
 })
 
 router.delete('/message', function (req, res) {
