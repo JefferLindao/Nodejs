@@ -23,7 +23,7 @@ router.get('/message', function (req, res) {
 router.post('/message', function (req, res) {
   console.log(req.query)
   if (req.query.error == 'ok') {
-    response.error(req, res, 'Error simulado', 400)
+    response.error(req, res, 'Error simulado', 400, 'Error de la prueba')
   } else {
     response.success(req, res, 'Creado correctamente', 201)
   }
@@ -36,5 +36,6 @@ router.delete('/message', function (req, res) {
   response.success(req, res, 'Eliminado correctamente')
 })
 
+app.use('/app', express.static('public'))
 app.listen(3000)
 console.log('La aplicacion esta escuchando en el http://localhost:3000')
