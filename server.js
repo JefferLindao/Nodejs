@@ -1,40 +1,16 @@
 const express = require('express')
 const bodyParse = require('body-parser')
 
-const response = require('./network/response')
-
-const router = express.Router()
+// const router = require('./components/message/network')
+const router = require('./network/routes')
 
 var app = express()
 
 app.use(bodyParse.json())
 app.use(bodyParse.urlencoded({ extended: false }))
-app.use(router)
+// app.use(router)
 
-router.get('/message', function (req, res) {
-  console.log(req.headers)
-  res.header({
-    "custom-header": "Nuestro valor personalizado"
-  })
-
-  response.success(req, res, 'Lista de mensaje')
-})
-
-router.post('/message', function (req, res) {
-  console.log(req.query)
-  if (req.query.error == 'ok') {
-    response.error(req, res, 'Error simulado', 400, 'Error de la prueba')
-  } else {
-    response.success(req, res, 'Creado correctamente', 201)
-  }
-})
-
-router.delete('/message', function (req, res) {
-  console.log(req.query)
-  console.log(req.body)
-  /* res.send('Mensaje ' + req.body.id + " añadido correctamente") */
-  response.success(req, res, 'Eliminado correctamente')
-})
+router(app)
 
 app.use('/app', express.static('public'))
 app.listen(3000)
